@@ -81,14 +81,14 @@ export const data = [
 
 export const shifts = {
   FHD: "rrrajand",
-  preDonut: ["ksaaed", "rrrajand", "omidghor", "cwuamzn"],
-  WednesdayDay: ["rrrajand", "amiladmo", "cwuamzn"],
-  postDonut: ["amiladmo", "ksaaed", "omidghor", "cwuamzn"],
-  BHD: "amiladmo",
+  preDonut: [ "rrrajand", "omidghor", "cwuamzn"],
+  WednesdayDay: ["rrrajand", "ksaaed", "cwuamzn"],
+  postDonut: ["ksaaed", "omidghor", "cwuamzn"],
+  BHD: "ksaaed",
 
   FHN: "osefatul",
-  wednesdayNight: ["osefatul", "rsinghof"],
-  BHN: ["rsinghof"],
+  wednesdayNight: ["osefatul", "amiladmo"],
+  BHN: ["amiladmo"],
 };
 
 
