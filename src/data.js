@@ -81,10 +81,10 @@ export const data = [
 
 export const shifts = {
   FHD: "rrrajand",
-  preDonut: [ "rrrajand", "omidghor", "cwuamzn"],
-  WednesdayDay: ["rrrajand", "ksaaed", "cwuamzn"],
-  postDonut: ["ksaaed", "omidghor", "cwuamzn"],
-  BHD: "ksaaed",
+  preDonut: [ "rrrajand", "omidghor", "ksaaed"],
+  WednesdayDay: ["rrrajand", "rsinghof",],
+  postDonut: ["rsinghof", "omidghor", "ksaaed"],
+  BHD: "rsinghof",
 
   FHN: "osefatul",
   wednesdayNight: ["osefatul", "amiladmo"],
