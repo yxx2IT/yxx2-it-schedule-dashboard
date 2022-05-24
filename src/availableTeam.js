@@ -1,12 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  activate,
-  selectActive,
-  deaActivate,
-  setDyads,
-} from "./features/userSlice";
-import { useSelector } from "react-redux";
+import { activate } from "./features/userSlice";
 
 const AvailbleTeam = ({ prsn, day, dayShift, sec }) => {
   const dispatch = useDispatch();
