@@ -35,6 +35,9 @@ const Time = ({ people }) => {
   const weDay = shifts.WednesdayDay;
   const postDONUT = shifts.postDonut;
   const BHD = shifts.BHD;
+  
+  //Mid-day Team
+  const MD = shifts.MD;
 
   //Night Team
   const FHN = shifts.FHN;
@@ -63,6 +66,13 @@ const Time = ({ people }) => {
   const bhdShift = people.filter((person) => {
     return BHD.includes(person.login);
   });
+  
+  
+   // Day-Night Shift
+  const miDayShift = people.filter((person) => {
+    return MD.includes(person.login);
+  });
+  
 
   // Night Front-Half Shift
   const fhnShift = people.filter((person) => {
@@ -77,6 +87,7 @@ const Time = ({ people }) => {
     return BHN.includes(person.login);
   });
 
+// Define Day and Night shifts
   const shiftTiming = () => {
     if (parseInt(hours) >= 6 && parseInt(hours) <= 18) {
       setDayShift(true);
@@ -84,12 +95,18 @@ const Time = ({ people }) => {
       setDayShift(false);
     }
 
-    if (dayShift) {
+   if (dayShift) {
       //the below codes will dispatch only pair members to the TEAM.js
       if (day === "2" || day === "3") {
         dispatch(unsetDyads());
         dispatch(deaActivate());
         dispatch(setDyads(predonutShift));
+        if (parseInt(hours) >= 13) {
+          dispatch(unsetDyads());
+          dispatch(deaActivate());
+          let addedMember = predonutShift.concat(miDayShift);
+          dispatch(setDyads(addedMember));
+        }
       } else if (day === "4") {
         dispatch(unsetDyads());
         dispatch(deaActivate());
@@ -98,12 +115,30 @@ const Time = ({ people }) => {
         dispatch(unsetDyads());
         dispatch(deaActivate());
         dispatch(setDyads(postdonutShift));
+        if (parseInt(hours) >= 13) {
+          dispatch(unsetDyads());
+          dispatch(deaActivate());
+          let addedMember = postdonutShift.concat(miDayShift);
+          dispatch(setDyads(addedMember));
+        }
       } else {
         dispatch(unsetDyads());
       }
     } else {
+      if (day === "2" || day === "3") {
+        dispatch(unsetDyads());
+        dispatch(deaActivate());
+        dispatch(setDyads(fhnShift));
+        if (parseInt(hours) >= 18 && parseInt(hours) < 23) {
+          dispatch(unsetDyads());
+          dispatch(deaActivate());
+          let addedMember = fhnShift.concat(miDayShift);
+          dispatch(setDyads(addedMember));
+        }
+      }
+
       //then wednesday night shift should be deployed as available on site Member
-      if (day === "4" && parseInt(hours) <= 6) {
+      else if (day === "4" && parseInt(hours) <= 6) {
         dispatch(deaActivate());
         dispatch(setDyads(fhnShift));
       }
@@ -113,12 +148,23 @@ const Time = ({ people }) => {
         dispatch(unsetDyads());
         dispatch(deaActivate());
         dispatch(setDyads(weNShift));
+
         // for other half night wednesday
       } else if (day === "5" && parseInt(hours) <= 6) {
         dispatch(unsetDyads());
         dispatch(deaActivate());
         dispatch(setDyads(weNShift));
-      } else if (day === "0" || day === "5" || day === "6") {
+      } else if (day === "5" || day === "6") {
+        dispatch(unsetDyads());
+        dispatch(deaActivate());
+        dispatch(setDyads(bhnShift));
+        if (parseInt(hours) >= 18 && parseInt(hours) < 23) {
+          dispatch(unsetDyads());
+          dispatch(deaActivate());
+          let addedMember = bhnShift.concat(miDayShift);
+          dispatch(setDyads(addedMember));
+        }
+      } else if (day === "0") {
         dispatch(unsetDyads());
         dispatch(deaActivate());
         dispatch(setDyads(bhnShift));
@@ -161,25 +207,47 @@ const Time = ({ people }) => {
     }
 
     if (day === "2" || day === "3") {
-      return (
-        <>
-          {predonutShift.map((nfr) => {
-            return (
-              <>
-                <AvailbleTeam
-                  key={nfr.id}
-                  prsn={nfr}
-                  day={day}
-                  dayShift={dayShift}
-                  hours={hours}
-                  minutes={minutes}
-                  sec={sec}
-                />
-              </>
-            );
-          })}
-        </>
-      );
+      if (parseInt(hours) >= 13) {
+        return (
+          <>
+            {predonutShift.concat(miDayShift).map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    day={day}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      } else {
+        return (
+          <>
+            {predonutShift.map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    day={day}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      }
     } else if (day === "4") {
       return (
         <>
@@ -201,25 +269,47 @@ const Time = ({ people }) => {
         </>
       );
     } else if (day === "5" || day === "6") {
-      return (
-        <>
-          {postdonutShift.map((nfr) => {
-            return (
-              <>
-                <AvailbleTeam
-                  key={nfr.id}
-                  prsn={nfr}
-                  day={day}
-                  dayShift={dayShift}
-                  hours={hours}
-                  minutes={minutes}
-                  sec={sec}
-                />
-              </>
-            );
-          })}
-        </>
-      );
+      if (parseInt(hours) >= 13) {
+        return (
+          <>
+            {postdonutShift.concat(miDayShift).map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    day={day}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      } else {
+        return (
+          <>
+            {postdonutShift.map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    day={day}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      }
     } else {
       return (
         <>
@@ -241,8 +331,11 @@ const Time = ({ people }) => {
         </>
       );
     }
-  } else {
-    if (day === "1" || day === "2" || day === "3") {
+  }
+
+  //Night Shift Available Team Members
+  else {
+    if (day === "1" && parseInt(hours) > 18) {
       return (
         <>
           {fhnShift.map((nfr) => {
@@ -262,8 +355,51 @@ const Time = ({ people }) => {
           })}
         </>
       );
-      // for tuesday night shift
-    } else if (day === "4" && parseInt(hours) < 6) {
+    } else if (day === "2" || day === "3") {
+      if (parseInt(hours) >= 18 && parseInt(hours) < 23) {
+        return (
+          <>
+            {fhnShift.concat(miDayShift).map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                    day={day}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      } else {
+        return (
+          <>
+            {fhnShift.map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                    day={day}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      }
+    }
+    // for tuesday night shift
+    else if (day === "4" && parseInt(hours) < 6) {
       return (
         <>
           {fhnShift.map((nfr) => {
@@ -303,8 +439,9 @@ const Time = ({ people }) => {
           })}
         </>
       );
-      // for wednesday nightshift
-    } else if (day === "5" && parseInt(hours) < 6) {
+    }
+    // for wednesday nightshift
+    else if (day === "5" && parseInt(hours) < 6) {
       return (
         <>
           {weNShift.map((nfr) => {
@@ -324,6 +461,48 @@ const Time = ({ people }) => {
           })}
         </>
       );
+    } else if (day === "5" || day === "6") {
+      if (parseInt(hours) >= 18 && parseInt(hours) < 23) {
+        return (
+          <>
+            {bhnShift.concat(miDayShift).map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                    day={day}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      } else {
+        return (
+          <>
+            {bhnShift.map((nfr) => {
+              return (
+                <>
+                  <AvailbleTeam
+                    key={nfr.id}
+                    prsn={nfr}
+                    dayShift={dayShift}
+                    hours={hours}
+                    minutes={minutes}
+                    sec={sec}
+                    day={day}
+                  />
+                </>
+              );
+            })}
+          </>
+        );
+      }
     } else {
       return (
         <>
