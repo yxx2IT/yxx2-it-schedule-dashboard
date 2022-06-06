@@ -81,15 +81,15 @@ export const data = [
 
 export const shifts = {
   FHD: "rrrajand", //FrontHalf
-  preDonut: [ "rrrajand", "omidghor"], //Monday + tuesday
+  preDonut: [ "rrrajand"], //Monday + tuesday
   WednesdayDay: ["rrrajand", "rsinghof",],
-  postDonut: ["rsinghof", "omidghor"], //Thursday + Friday
+  postDonut: ["rsinghof"], //Thursday + Friday
   BHD: "rsinghof", //BackHalf Day
   
-  MD: ["ksaaed"], // MidDay-Shift
+  MD: [], // MidDay-Shift
 
-  FHN: ["osefatul"], //Front-Half Night Shift
-  wednesdayNight: ["osefatul", "amiladmo"],
+  FHN: ["ksaaed"], //Front-Half Night Shift
+  wednesdayNight: ["ksaaed", "amiladmo"],
   BHN: ["amiladmo"], //Back-Half Night
 };
 
