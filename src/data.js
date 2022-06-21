@@ -80,7 +80,7 @@ export const data = [
 ];
 
 export const shifts = {
-  FHD: "rrrajand", //FrontHalf
+  FHD: "omidghor", //FrontHalf
   preDonut: [ "omidghor", "cwuamzn"], //Monday + tuesday
   WednesdayDay: ["omidghor", "rsinghof","cwuamzn"],
   postDonut: ["rsinghof","cwuamzn"], //Thursday + Friday
